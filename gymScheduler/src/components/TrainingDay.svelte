@@ -1,5 +1,6 @@
 <script>
 import TrainingDaysDetails from "./TrainingDaysDetails.svelte";
+import TrainingWeekSummary from "./TrainingWeekSummary.svelte";
 
 
 //tableau d'objets de jours
@@ -14,6 +15,18 @@ const nbOfDays = [
 ];
 //recupération de la selection de l'utilisateur (menu déroulant)
 let nbDaysTrainingPerWeek;
+let isSummaryReady = false;
+//résumé des entrainements
+let summary = [];
+
+function handleNewExercise(event) {
+    console.log("on:add-exercise", event.detail);
+    summary = [...summary, event.detail];
+}
+
+function generateSummary() {
+    isSummaryReady = true;
+}
 
 </script>
 
@@ -48,8 +61,11 @@ let nbDaysTrainingPerWeek;
 <div class="all-days">
     {#each nbDaysTrainingPerWeek.value as dayNumber, index}
     <div class="training-day-details">
-        <TrainingDaysDetails title={`Day ${++index}`}></TrainingDaysDetails>
+        <TrainingDaysDetails title={`Day ${++index}`} on:add-exercise={handleNewExercise}></TrainingDaysDetails>
     </div>
     {/each}
 </div>
+<TrainingWeekSummary summary={summary} days={nbDaysTrainingPerWeek.value.length}></TrainingWeekSummary>
+<button on:click={generateSummary}>Generate summary</button>
 {/if}
+

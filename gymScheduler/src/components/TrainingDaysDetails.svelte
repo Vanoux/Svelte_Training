@@ -1,4 +1,8 @@
 <script>
+import {createEventDispatcher} from "svelte"; //pour le custom event
+
+const dispatch = createEventDispatcher();
+
     export let title;
     let exercise = {
         activity: "",
@@ -9,16 +13,19 @@
     let exercises = [];
 
     function handleSubmit() {
-        exercises = [...exercises, { ...exercise}]; 
         //Ajoute dans la variable exercises un clone de l'objet exercise à la soumission du form
-        console.log('exercises', exercises)
+        exercises = [...exercises, { ...exercise}];
+        //Ajout du custom event 'add-exercise' pour communiquer avec le parent
+        dispatch('add-exercise', {...exercise, title: title}); //clone exercise + ajout de la valeur title
+        
+        
     }
 
 </script>
 
 <style></style>
 
-<!-- Détails des exercices -->
+<!-- Formulaire détails et création des exercices -->
 <div>
     <h2>{title}</h2>
     <div>
