@@ -17,7 +17,18 @@ let nbDaysTrainingPerWeek;
 
 </script>
 
-<style></style>
+<style>
+    .all-days {
+            border: 5px solid chocolate;
+            margin: 10px;
+        }
+
+    .training-day-details {
+        border: 2px solid chartreuse;
+        margin: 10px;
+        padding: 5px;
+    }
+</style>
 
 <!-- Dropdown list -->
 <div>
@@ -34,9 +45,11 @@ let nbDaysTrainingPerWeek;
 
 {#if nbDaysTrainingPerWeek}
 <!-- Affichage du nb de jours d'entrainement du Component TrainingDaysDetails-->
-<div>
+<div class="all-days">
     {#each nbDaysTrainingPerWeek.value as dayNumber, index}
-        <TrainingDaysDetails title={`day ${++index}`}></TrainingDaysDetails>
+    <div class="training-day-details">
+        <TrainingDaysDetails title={`Day ${++index}`}></TrainingDaysDetails>
+    </div>
     {/each}
 </div>
 {/if}
