@@ -1,6 +1,5 @@
 <script>
 import {createEventDispatcher} from "svelte"; //pour le custom event
-
 const dispatch = createEventDispatcher();
 
     export let title;
@@ -17,10 +16,7 @@ const dispatch = createEventDispatcher();
         exercises = [...exercises, { ...exercise}];
         //Ajout du custom event 'add-exercise' pour communiquer avec le parent
         dispatch('add-exercise', {...exercise, title: title}); //clone exercise + ajout de la valeur title
-        
-        
     }
-
 </script>
 
 <style></style>

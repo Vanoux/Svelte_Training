@@ -22,6 +22,7 @@ let summary = [];
 function handleNewExercise(event) {
     console.log("on:add-exercise", event.detail);
     summary = [...summary, event.detail];
+    isSummaryReady = false;
 }
 
 function generateSummary() {
@@ -58,14 +59,17 @@ function generateSummary() {
 
 {#if nbDaysTrainingPerWeek}
 <!-- Affichage du nb de jours d'entrainement du Component TrainingDaysDetails-->
-<div class="all-days">
-    {#each nbDaysTrainingPerWeek.value as dayNumber, index}
-    <div class="training-day-details">
-        <TrainingDaysDetails title={`Day ${++index}`} on:add-exercise={handleNewExercise}></TrainingDaysDetails>
+    <div class="all-days">
+        {#each nbDaysTrainingPerWeek.value as dayNumber, index}
+        <div class="training-day-details">
+            <TrainingDaysDetails title={`Day ${++index}`} on:add-exercise={handleNewExercise}></TrainingDaysDetails>
+        </div>
+        {/each}
     </div>
-    {/each}
-</div>
-<TrainingWeekSummary summary={summary} days={nbDaysTrainingPerWeek.value.length}></TrainingWeekSummary>
-<button on:click={generateSummary}>Generate summary</button>
+    {#if isSummaryReady}
+    <!-- Passage de 2 props (summary & days) dans le component TrainingWeekSummary -->
+    <TrainingWeekSummary summary={summary} days={nbDaysTrainingPerWeek.value.length}></TrainingWeekSummary>
+    {/if}
+    <button on:click={generateSummary}>Generate summary</button>
 {/if}
 
